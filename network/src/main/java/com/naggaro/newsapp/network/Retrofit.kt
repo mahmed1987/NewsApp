@@ -3,9 +3,8 @@ package com.naggaro.newsapp.network
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.stream.MalformedJsonException
-import com.seed.roundrobin.common.core.Failure
-import com.seed.roundrobin.common.core.Message
-import com.seed.roundrobin.common.functional.Either
+import com.naggaro.common.error.Failure
+import com.naggaro.common.functional.Either
 import retrofit2.Call
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -25,11 +24,7 @@ fun <T, R> Call<T>.requestBlocking(transform: (T) -> R): Either<Failure, R> {
                 400 -> Either.Left(Failure.BadRequest)
                 404 -> Either.Left(Failure.NotFound)
                 415 -> Either.Left(Failure.UnSupportedMediaType)
-                500 -> {
-                    val remoteErrorMessage: Message =
-                        Gson().fromJson(response.errorBody()!!.charStream(), Message::class.java)
-                    Either.Left(Failure.InternalServerError.apply { message = remoteErrorMessage })
-                }
+                500 -> Either.Left(Failure.InternalServerError)
                 else -> Either.Left(Failure.ServerError)
             }
         }
@@ -40,7 +35,7 @@ fun <T, R> Call<T>.requestBlocking(transform: (T) -> R): Either<Failure, R> {
             is MalformedJsonException -> Either.Left(Failure.MalFormedJson)
             is IllegalStateException -> Either.Left(Failure.IllegalStateException)
             is JsonSyntaxException -> Either.Left(Failure.JsonSyntaxException)
-            is SocketTimeoutException->Either.Left(Failure.SocketTimedOutException)
+            is SocketTimeoutException -> Either.Left(Failure.SocketTimedOutException)
             else -> Either.Left(Failure.ServerError)
         }
     }
@@ -54,18 +49,10 @@ fun <T> Call<T>.requestBlocking(): Either<Failure, T> {
             false -> when (response.code()) {
                 401 -> Either.Left(Failure.AuthError)
                 403 -> Either.Left(Failure.Forbidden)
-                400 -> {
-                    val remoteErrorMessage: Message =
-                        Gson().fromJson(response.errorBody()!!.charStream(), Message::class.java)
-                    Either.Left(Failure.BadRequest.apply { message = remoteErrorMessage })
-                }
+                400 -> Either.Left(Failure.BadRequest)
                 404 -> Either.Left(Failure.NotFound)
                 415 -> Either.Left(Failure.UnSupportedMediaType)
-                500 -> {
-                    val remoteErrorMessage: Message =
-                        Gson().fromJson(response.errorBody()!!.charStream(), Message::class.java)
-                    Either.Left(Failure.InternalServerError.apply { message = remoteErrorMessage })
-                }
+                500 -> Either.Left(Failure.InternalServerError)
                 else -> Either.Left(Failure.ServerError)
             }
         }

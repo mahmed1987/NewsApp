@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="news_item_detail_transition_name">news_detail_transition</string>
+    <string name="news_item_transition_name">news_item_%1$s</string>
+</resources>

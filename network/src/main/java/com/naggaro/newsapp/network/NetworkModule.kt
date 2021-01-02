@@ -1,6 +1,7 @@
 package com.naggaro.newsapp.network
 
-import com.seed.roundrobin.views.system.RequestHeaders
+import com.naggaro.dtos.network.RequestHeaders
+import com.naggaro.dtos.network.RequestInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -13,8 +14,7 @@ import java.util.concurrent.TimeUnit
 val networkDependencies = module {
 
     single { OkHttpClient.Builder() }
-    single { RequestHeaders(null, "en", "application/json") }
-    single { RequestInterceptor(get()) }
+    single { RequestInterceptor(RequestHeaders) }
     single<Retrofit> {
         val httpClient = get<OkHttpClient.Builder>()
 

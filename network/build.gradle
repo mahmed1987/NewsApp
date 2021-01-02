@@ -32,8 +32,8 @@ android {
 }
 
 dependencies {
-//    implementation project(":common")
-    implementation project(":views")
+    implementation project(":common")
+    implementation project(":dtos")
 }
 repositories {
     mavenCentral()

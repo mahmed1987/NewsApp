@@ -13,7 +13,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/networks" />
+            <option value="$PROJECT_DIR$/business" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/dtos" />
+            <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/news" />
+            <option value="$PROJECT_DIR$/repositories" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -1,2 +1,6 @@
-include ':app',':network'
+include ':business'
+include ':news'
+include ':repositories'
+include ':common'
+include ':app',':network',':dtos'
 rootProject.name = "NewsApp"

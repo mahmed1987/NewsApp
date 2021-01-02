@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newsNavigation"
+    app:startDestination="@id/newsList">
+
+    <fragment
+        android:id="@+id/newsList"
+        android:name="com.naggaro.newsapp.news.ui.NewsList"
+        tools:layout="@layout/fragment_news_list"
+        android:label="NewsList" >
+        <action
+            android:id="@+id/toDetail"
+
+            app:destination="@id/newsDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetail"
+        tools:layout="@layout/fragment_news_detail"
+        android:name="com.naggaro.newsapp.news.ui.NewsDetail"
+        android:label="NewsDetail" >
+        <argument
+            android:name="news"
+            app:argType="com.naggaro.dtos.news.NewsView" />
+    </fragment>
+</navigation>
