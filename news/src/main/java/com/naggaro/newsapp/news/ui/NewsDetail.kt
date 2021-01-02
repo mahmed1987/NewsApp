@@ -29,8 +29,8 @@ class NewsDetail : BaseFragment() {
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
-            duration = 500.toLong()
-            scrimColor = requireContext().themeColor(R.attr.colorSecondary)
+            duration = 400.toLong()
+            scrimColor =Color.TRANSPARENT
             setAllContainerColors(requireContext().themeColor(R.attr.colorPrimary))
         }
     }
