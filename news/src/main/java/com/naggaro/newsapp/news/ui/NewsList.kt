@@ -73,10 +73,10 @@ class NewsList : BaseFragment() {
         super.attachListeners()
         adapter.clickListener={ news,view->
             exitTransition = MaterialElevationScale(false).apply {
-                duration = 300.toLong()
+                duration = 500L
             }
             reenterTransition = MaterialElevationScale(true).apply {
-                duration = 300.toLong()
+                duration = 500L
             }
             val newsItemDetailTransitionName = getString(R.string.news_item_detail_transition_name)
             val extras = FragmentNavigatorExtras(view to newsItemDetailTransitionName)

@@ -28,11 +28,9 @@ class NewsDetail : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            // Scope the transition to a view in the hierarchy so we know it will be added under
-            // the bottom app bar but over the elevation scale of the exiting HomeFragment.
             drawingViewId = R.id.nav_host_fragment
-            duration = 300.toLong()
-            scrimColor = Color.TRANSPARENT
+            duration = 500.toLong()
+            scrimColor = requireContext().themeColor(R.attr.colorSecondary)
             setAllContainerColors(requireContext().themeColor(R.attr.colorPrimary))
         }
     }
