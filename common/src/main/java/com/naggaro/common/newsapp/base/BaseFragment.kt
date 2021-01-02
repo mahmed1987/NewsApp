@@ -24,11 +24,11 @@ import org.koin.core.scope.Scope
 abstract class BaseFragment : Fragment(){
 
 
-    protected var scope: Scope? = null
-    protected var binding: ViewDataBinding? = null
-    protected open var shouldBindData = false
 
-    //region Abstracts
+
+    //region Common
+    protected var binding: ViewDataBinding? = null
+    private var progressBar: ProgressBar? = null
     protected fun showProgress(showProgress: Boolean, lockScreen: Boolean) {
         if (showProgress) {
             progressBar?.visible()
@@ -48,42 +48,49 @@ abstract class BaseFragment : Fragment(){
             )
         }
     }
+    private fun showMessage(
+        messageBody: String,
+        onClick: (String) -> Unit ={}
+    ) {
+        Toast.makeText(context,messageBody,Toast.LENGTH_LONG).show()
+    }
 
+    protected fun handleFailure(failure: Failure?) {
+        showProgress(false, lockScreen = false)
+        when (failure) {
+            is AuthError -> showMessage(
+                getString(R.string.failure_authorization)
+            )
+            is Forbidden -> showMessage(getString(R.string.failure_forbidden))
+            is InternalServerError -> showMessage(
+                getString(R.string.failure_forbidden)
+            )
+            is BadRequest -> showMessage(getString(R.string.failure_bad_request))
+            is NotFound -> showMessage(getString(R.string.failure_not_found))
+            is AndroidError -> showMessage(getString(R.string.failure_android_error))
+            is UnSupportedMediaType -> showMessage(getString(R.string.failure_unsupportedmedia))
+            is MalFormedJson -> showMessage(getString(R.string.failure_malformedJson))
+            is IllegalStateException -> showMessage(getString(R.string.failure_malformedJson))
+            is JsonSyntaxException -> showMessage(getString(R.string.failure_malformedJson))
+            is UniqueConstraintError -> showMessage(getString(R.string.failure_unique_constraint))
+            is ServerError -> showMessage(getString(R.string.failure_server_error))
+        }
+    }
+    //endregion
+    //region Abstracts
+    protected open var shouldBindData = false
     protected abstract val layoutResourceId: Int
     protected open fun attachListeners() {
 
     }
-
-    private var progressBar: ProgressBar? = null
-
-    protected fun setScreenTitle(title: Int) {
-        (activity as AppCompatActivity).supportActionBar?.title = getString(title)
-    }
-
-    protected fun setScreenSubTitle(subTitle: Int) {
-        (activity as AppCompatActivity).supportActionBar?.subtitle = getString(subTitle)
-    }
-
-    protected fun setScreenSubTitle(subTitle: String) {
-        (activity as AppCompatActivity).supportActionBar?.subtitle = subTitle
-    }
-
+    abstract fun  ignite (savedInstanceState:Bundle?)
+    //endregion
+    //region Fragment Title and Subtitle
     protected fun setScreenTitle(title: String, subtitle: String) {
         (activity as AppCompatActivity).supportActionBar?.title = title
         (activity as AppCompatActivity).supportActionBar?.subtitle = subtitle
 
     }
-    protected fun setScreenTitle(title: Int, subtitle: Int) {
-        (activity as AppCompatActivity).supportActionBar?.title = getString(title)
-        (activity as AppCompatActivity).supportActionBar?.subtitle = getString(subtitle)
-
-    }
-
-    /**
-     * Write the code here which glues this fragment with the view model.
-     */
-    protected abstract fun interaction()
-
     //endregion
     //region LifeCycle
     override fun onCreateView(
@@ -119,38 +126,8 @@ abstract class BaseFragment : Fragment(){
         showProgress(false, false)
         attachListeners()
         ignite(savedInstanceState)
-        interaction()
     }
 
-    abstract fun  ignite (savedInstanceState:Bundle?)
 
-     fun showMessage(
-        messageBody: String,
-        onClick: (String) -> Unit ={}
-    ) {
-       Toast.makeText(context,messageBody,Toast.LENGTH_LONG).show()
-    }
-
-    protected fun handleFailure(failure: Failure?) {
-        showProgress(false, lockScreen = false)
-        when (failure) {
-            is AuthError -> showMessage(
-                getString(R.string.failure_authorization)
-            )
-            is Forbidden -> showMessage(getString(R.string.failure_forbidden))
-            is InternalServerError -> showMessage(
-                getString(R.string.failure_forbidden)
-            )
-            is BadRequest -> showMessage(getString(R.string.failure_bad_request))
-            is NotFound -> showMessage(getString(R.string.failure_not_found))
-            is AndroidError -> showMessage(getString(R.string.failure_android_error))
-            is UnSupportedMediaType -> showMessage(getString(R.string.failure_unsupportedmedia))
-            is MalFormedJson -> showMessage(getString(R.string.failure_malformedJson))
-            is IllegalStateException -> showMessage(getString(R.string.failure_malformedJson))
-            is JsonSyntaxException -> showMessage(getString(R.string.failure_malformedJson))
-            is UniqueConstraintError -> showMessage(getString(R.string.failure_unique_constraint))
-            is ServerError -> showMessage(getString(R.string.failure_server_error))
-        }
-    }
     //endregion
 }

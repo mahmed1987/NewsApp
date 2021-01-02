@@ -15,4 +15,7 @@
     <string name="failure_not_found">You cannot ask for things you know aren\'t there.</string>
     <string name="failure_server_error">We dont know what went wrong with the server.</string>
 
+    <string name="most_popular">Most Popular</string>
+    <string name="ny_times">New York Times</string>
+
 </resources>

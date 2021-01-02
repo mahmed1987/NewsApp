@@ -17,13 +17,13 @@ import com.naggaro.newsapp.news.R
 import kotlinx.android.synthetic.main.fragment_news_list.*
 
 class NewsDetail : BaseFragment() {
+    //region Members and Props
     override val layoutResourceId = R.layout.fragment_news_detail
     override var shouldBindData=true
     private val args:NewsDetailArgs by navArgs()
-    override fun interaction() {
+    //endregion
 
-    }
-
+    //region Fragment LifeCycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,21 +36,20 @@ class NewsDetail : BaseFragment() {
             setAllContainerColors(requireContext().themeColor(R.attr.colorPrimary))
         }
     }
+    //endregion
 
+
+    //region Implementation
     override fun ignite(savedInstanceState: Bundle?) {
         args.also {
+            setScreenTitle(it.news.title,getString(R.string.most_popular))
             binding?.apply {
                 setVariable(BR.newsDetail,it.news)
             }
         }
-//        arguments?.getParcelable<Permission>("permission")?.let {
-//            binding?.apply {
-//                setScreenTitle("Permissions", it.name)
-//                setVariable(BR.permission, it)
-//                agreeBtn.tag = it
-//            }
-//        }
     }
+    //endregion
+
 
 
 }

@@ -28,16 +28,24 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NewsList : BaseFragment() {
 
+    //region Members and Props
+    override val layoutResourceId = R.layout.fragment_news_list
+    private val adapter = GeneralAdapter(BR.news, R.layout.news_item, NewsView.DIFF_CALLBACK)
+    //endregion
+
     //region Injections
-
-
     private val newsViewModel: NewsViewModel by sharedViewModel(from = {
         findNavController().getViewModelStoreOwner(R.id.newsNavigation)
     }) // passing the viewmodelstore here binds the lifecycle of this viewmodel with the navigation graph passed to it. As soon as the navigation graph is destroyed the viewmodel is also killed.
-
     //endregion
-    override val layoutResourceId = R.layout.fragment_news_list
-    private val adapter = GeneralAdapter(BR.news, R.layout.news_item, NewsView.DIFF_CALLBACK)
+    //region Fragment Lifecycle
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        newsViewModel.fetchMostViewedNews("all-sections", 7)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Postpone enter transitions to allow shared element transitions to run.
@@ -45,9 +53,41 @@ class NewsList : BaseFragment() {
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
     }
-    override fun interaction() {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.news_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.refresh -> {
+                newsViewModel.fetchMostViewedNews("all-sections", 7)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+    //endregion
+    //region Implementation
+
+    override fun attachListeners() {
+        super.attachListeners()
+        adapter.clickListener={ news,view->
+            exitTransition = MaterialElevationScale(false).apply {
+                duration = 300.toLong()
+            }
+            reenterTransition = MaterialElevationScale(true).apply {
+                duration = 300.toLong()
+            }
+            val newsItemDetailTransitionName = getString(R.string.news_item_detail_transition_name)
+            val extras = FragmentNavigatorExtras(view to newsItemDetailTransitionName)
+            findNavController().navigate(NewsListDirections.toDetail(news),extras)
+        }
+    }
+    override fun ignite(savedInstanceState: Bundle?) {
+        newsRv.configureVerticalList(adapter)
+        setScreenTitle(getString(R.string.ny_times),getString(R.string.most_popular))
         newsViewModel.run {
-            fetchMostViewedNews("all-sections", 7)
+
             observe(mostViewedNews)
             {
                 //only commit the largest picture from the array , so as to smoothly show the transitions between this screen and the detail
@@ -68,46 +108,12 @@ class NewsList : BaseFragment() {
             }
             fault(failure, ::handleFailure)
         }
-
     }
-
-    override fun attachListeners() {
-        super.attachListeners()
-        adapter.clickListener={ news,view->
-            exitTransition = MaterialElevationScale(false).apply {
-                duration = 300.toLong()
-            }
-            reenterTransition = MaterialElevationScale(true).apply {
-                duration = 300.toLong()
-            }
-            val newsItemDetailTransitionName = getString(R.string.news_item_detail_transition_name)
-            val extras = FragmentNavigatorExtras(view to newsItemDetailTransitionName)
-            findNavController().navigate(NewsListDirections.toDetail(news),extras)
-        }
-    }
-    override fun ignite(savedInstanceState: Bundle?) {
-        newsRv.configureVerticalList(adapter)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.news_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.refresh -> {
-                newsViewModel.fetchMostViewedNews("all-sections", 7)
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
-    }
+    //endregion
 
 }
 
 @BindingAdapter("imageUrl")
 fun ImageView.setImageUrl(url: String?) {
-    Glide.with(context.applicationContext).load(url).into(this)
+    Glide.with(context.applicationContext).load(url).placeholder(R.drawable.ic_gallery).into(this)
 }
