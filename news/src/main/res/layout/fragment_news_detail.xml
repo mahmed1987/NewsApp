@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="@string/news_item_detail_transition_name"
-        android:background="?attr/colorPrimary">
+        android:background="?attr/colorPrimary"
+        android:transitionName="@string/news_item_detail_transition_name">
 
         <ImageView
             android:id="@+id/imageView"
@@ -22,16 +22,26 @@
             android:layout_height="200dp"
             android:scaleType="centerCrop"></ImageView>
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="3dp"
+            android:background="?attr/colorSurface"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"></View>
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
             android:text="@{newsDetail.title}"
             android:textAppearance="@style/TextAppearance.Headline4"
             android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
