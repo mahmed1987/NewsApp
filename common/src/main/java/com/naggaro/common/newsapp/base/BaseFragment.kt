@@ -74,6 +74,7 @@ abstract class BaseFragment : Fragment(){
             is JsonSyntaxException -> showMessage(getString(R.string.failure_malformedJson))
             is UniqueConstraintError -> showMessage(getString(R.string.failure_unique_constraint))
             is ServerError -> showMessage(getString(R.string.failure_server_error))
+            is NetworkConnection -> showMessage(getString(R.string.failure_network_connection))
         }
     }
     //endregion

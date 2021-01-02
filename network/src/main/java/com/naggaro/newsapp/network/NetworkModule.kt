@@ -32,8 +32,8 @@ val networkDependencies = module {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
         retroBuilder.client(
-            httpClient.readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS).build()
+            httpClient.readTimeout(20, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS).build()
         )
         retroBuilder.build()
     }
