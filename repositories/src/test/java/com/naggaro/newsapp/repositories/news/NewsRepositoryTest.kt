@@ -1,6 +1,6 @@
 package com.naggaro.newsapp.repositories.news
 
-import com.naggaro.common.functional.Either
+import com.naggaro.common.newsapp.functional.Either
 import com.naggaro.dtos.serverObjects.NewsHolder
 import com.naggaro.newsapp.network.networkDependencies
 import com.naggaro.newsapp.repositories.repoDependencies

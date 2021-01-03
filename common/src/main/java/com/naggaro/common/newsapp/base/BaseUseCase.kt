@@ -1,7 +1,7 @@
 package com.naggaro.common.newsapp.base
 
 import com.naggaro.common.error.Failure
-import com.naggaro.common.functional.Either
+import com.naggaro.common.newsapp.functional.Either
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

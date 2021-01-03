@@ -1,4 +1,4 @@
-package com.naggaro.common.functional
+package com.naggaro.common.newsapp.functional
 
 //Please note that the either class itself doesn't hold any values. Its child classes does.
 sealed class Either<out L, out R> {
@@ -24,9 +24,9 @@ infix fun <L, R, R2> Either<L, R>.map(f: (R) -> R2): Either<L, R2> = when (this)
     is Either.Right -> Either.Right(f(this.b))
 }
 
-infix fun<L,R,R2> Either <L,R>.flatMap(f: (R) -> Either<L,R2>) : Either<L,R2> = when(this)
+infix fun<L,R,R2> Either<L, R>.flatMap(f: (R) -> Either<L, R2>) : Either<L, R2> = when(this)
 {
-    is Either.Left->this
+    is Either.Left ->this
     is Either.Right ->f(b)
 
 }

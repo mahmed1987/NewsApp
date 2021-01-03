@@ -1,14 +1,12 @@
 package com.naggaro.newsapp.business.news.usecases
 
-import com.naggaro.common.functional.Either
-import com.naggaro.common.newsapp.base.BaseUseCase
+import com.naggaro.common.newsapp.functional.Either
 import com.naggaro.dtos.news.NewsView
 import com.naggaro.newsapp.repositories.news.NewsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
@@ -16,6 +14,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 import com.google.common.truth.Truth.assertThat
+import com.naggaro.common.error.Failure
 
 @RunWith(MockitoJUnitRunner::class)
 class GetMostViewedNewsTest {
@@ -27,9 +26,9 @@ class GetMostViewedNewsTest {
 
     @Test
     fun `usecase returns data when given by repo`() = runBlocking {
-        val list: List<NewsView> = mock()
+        val actualResult: List<NewsView> = mock()
         val result: Either.Right<List<NewsView>> = mock()
-        Mockito.`when`(result.b).thenReturn(list)
+        Mockito.`when`(result.b).thenReturn(actualResult)
 
         Mockito.`when`(newsRepository.news(ArgumentMatchers.anyString(),ArgumentMatchers.anyInt())).thenReturn(result)
         val getNews = GetMostViewedNews(CoroutineScope(Dispatchers.IO + Job()), newsRepository)
@@ -44,9 +43,9 @@ class GetMostViewedNewsTest {
 
     @Test
     fun `usecase returns error when reported by repo`() = runBlocking {
-        val list: List<NewsView> = mock()
-        val result: Either.Right<List<NewsView>> = mock()
-        Mockito.`when`(result.b).thenReturn(list)
+        val actualResult: Failure = mock()
+        val result: Either.Left<Failure> = mock()
+        Mockito.`when`(result.a).thenReturn(actualResult)
 
         Mockito.`when`(newsRepository.news(ArgumentMatchers.anyString(),ArgumentMatchers.anyInt())).thenReturn(result)
         val getNews = GetMostViewedNews(CoroutineScope(Dispatchers.IO + Job()), newsRepository)
@@ -54,7 +53,7 @@ class GetMostViewedNewsTest {
 
         getNews.invoke(params){
             assertThat(it).isEqualTo(result)
-            assertThat(result.b).isNotNull()
+            assertThat(result.a).isNotNull()
         }
 
     }

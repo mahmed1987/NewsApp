@@ -1,10 +1,9 @@
 package com.naggaro.newsapp.network
 
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.stream.MalformedJsonException
 import com.naggaro.common.error.Failure
-import com.naggaro.common.functional.Either
+import com.naggaro.common.newsapp.functional.Either
 import retrofit2.Call
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
