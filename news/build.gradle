@@ -43,5 +43,5 @@ dependencies {
     implementation project(":business")
     implementation project(":common")
     implementation project(":dtos")
-    testImplementation "com.google.truth:truth:1.1"
+
 }

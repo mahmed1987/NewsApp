@@ -1,4 +1,4 @@
-package com.naggaro.repositories
+package com.naggaro.newsapp.repositories
 
 import org.junit.Test
 
