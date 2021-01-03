@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-implementation project(":dtos")
+    implementation project(":dtos")
     implementation project(":network")
     implementation project(":common")
 }
