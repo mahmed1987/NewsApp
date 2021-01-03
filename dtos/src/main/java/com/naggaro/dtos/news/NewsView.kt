@@ -3,6 +3,7 @@ package com.naggaro.dtos.news
 import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
+import com.naggaro.dtos.serverObjects.News
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -14,7 +15,7 @@ data class NewsView(
     val date: String,
     var largestPicture: PictureView? = null,
     val pictures: List<PictureView>
-) :Parcelable {
+) : Parcelable {
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<NewsView> =
             object : DiffUtil.ItemCallback<NewsView>() {
@@ -32,13 +33,18 @@ data class NewsView(
                     return true
                 }
             }
+
+        fun dummyNews() = NewsView(
+            1, "Dummy Title", "Dummy abstract", "Dummy authors", "Dummy date",
+            pictures = listOf<PictureView>()
+        )
     }
 }
 
 @Parcelize
-data class PictureView(val url: String, val format: String, val height: Int, val width: Int) : Parcelable
-{
+data class PictureView(val url: String, val format: String, val height: Int, val width: Int) :
+    Parcelable {
     companion object {
-        fun empty() =PictureView("","",0,0)
+        fun empty() = PictureView("", "", 0, 0)
     }
 }
