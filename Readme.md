@@ -48,6 +48,12 @@ This would be the module which would host the news feature of the application. T
 1. Provide a list of news.
 2. Provides detail of a single news.
 
+## Test cases
+The following test cases were performed
+1. NewsRepositoryTest
+2. GetMostViewedNewsTest
+
+
 
 
 
