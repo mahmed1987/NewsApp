@@ -64,8 +64,8 @@ This would be the module which would host the news feature of the application. T
 1. Provide a list of news.
 2. Provides detail of a single news.
 ###### Dependencies
- implementation project(":common")
-    implementation project(":dtos")
+*implementation project(":common")
+*implementation project(":dtos")
 
 ## Test cases
 The following test cases were performed
