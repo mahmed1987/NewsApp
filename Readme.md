@@ -59,7 +59,7 @@ This module exists at the lowest level of the application module graph. By that 
 * implementation project(":common")
 * implementation project(":dtos")
 ## News (UI module)
-This would be the module which would host the news feature of the application. This feature includes two fragments and takes its data from the business module.
+This would be the module which would host the news feature of the application. This feature includes two fragments and takes its data from the business module. Other than business module , this UI would be completely agnostic of the rest of the system
 ###### Purpose
 1. Provide a list of news.
 2. Provides detail of a single news.
