@@ -47,6 +47,7 @@ dependencies {
     debugImplementation('androidx.fragment:fragment-testing:1.2.5') {
         exclude group: 'androidx.test', module: 'monitor'
     }
+
     androidTestImplementation "com.google.truth:truth:1.1"
     androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'

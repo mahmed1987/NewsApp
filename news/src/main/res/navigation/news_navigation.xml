@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/newsList"
-        android:name="com.naggaro.newsapp.news.ui.NewsList"
+        android:name="com.naggaro.newsapp.news.ui.NewsListFragment"
         tools:layout="@layout/fragment_news_list"
         android:label="NewsList" >
         <action
@@ -18,10 +18,14 @@
     <fragment
         android:id="@+id/newsDetail"
         tools:layout="@layout/fragment_news_detail"
-        android:name="com.naggaro.newsapp.news.ui.NewsDetail"
+        android:name="com.naggaro.newsapp.news.ui.NewsDetailFragment"
         android:label="NewsDetail" >
         <argument
             android:name="news"
             app:argType="com.naggaro.dtos.news.NewsView" />
     </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.naggaro.newsapp.news.ui.TestFragment"
+        android:label="TestFragment" />
 </navigation>

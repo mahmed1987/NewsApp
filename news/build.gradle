@@ -44,4 +44,6 @@ dependencies {
     implementation project(":common")
     implementation project(":dtos")
 
+    kaptAndroidTest 'androidx.databinding:databinding-compiler:4.1.1'
+
 }

@@ -26,10 +26,10 @@ import com.naggaro.newsapp.news.viewmodel.NewsViewModel
 import kotlinx.android.synthetic.main.fragment_news_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewsList : BaseFragment() {
+class NewsListFragment() : BaseFragment() {
 
     //region Members and Props
-    override val layoutResourceId = R.layout.fragment_news_list
+
     private val adapter = GeneralAdapter(BR.news, R.layout.news_item, NewsView.DIFF_CALLBACK)
     //endregion
 
@@ -66,9 +66,8 @@ class NewsList : BaseFragment() {
 
         return super.onOptionsItemSelected(item)
     }
-    //endregion
-    //region Implementation
 
+    override fun layoutResourceId()= R.layout.fragment_news_list
     override fun attachListeners() {
         super.attachListeners()
         adapter.clickListener={ news,view->
@@ -80,7 +79,7 @@ class NewsList : BaseFragment() {
             }
             val newsItemDetailTransitionName = getString(R.string.news_item_detail_transition_name)
             val extras = FragmentNavigatorExtras(view to newsItemDetailTransitionName)
-            findNavController().navigate(NewsListDirections.toDetail(news),extras)
+            findNavController().navigate(NewsListFragmentDirections.toDetail(news),extras)
         }
     }
     override fun ignite(savedInstanceState: Bundle?) {
@@ -95,7 +94,7 @@ class NewsList : BaseFragment() {
                     val largestPicture = PictureUtil.findLargestImage(it.pictures)
                     it.largestPicture = largestPicture
                 }
-                adapter.submitList(it)
+                populateList(it)
             }
             observe(operationStatus)
             {
@@ -109,11 +108,14 @@ class NewsList : BaseFragment() {
             fault(failure, ::handleFailure)
         }
     }
-    //endregion
+
+     fun populateList(it: List<NewsView>) {
+        adapter.submitList(it)
+    }
 
 }
 
-@BindingAdapter("imageUrl")
-fun ImageView.setImageUrl(url: String?) {
-    Glide.with(context.applicationContext).load(url).placeholder(R.drawable.ic_gallery).into(this)
-}
+
+
+
+

@@ -1,5 +1,6 @@
 package com.naggaro.newsapp.news.ui
 
+import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
@@ -18,13 +19,24 @@ import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.Mock
 import com.google.common.truth.Truth.assertThat
+import com.naggaro.dtos.news.NewsView
+import com.naggaro.newsapp.news.newsDependencies
+import org.junit.Before
 import org.junit.runner.RunWith
+import org.koin.core.context.startKoin
+import org.koin.test.mock.declareMock
 
 @RunWith(AndroidJUnit4::class)
 class NewsListTest
 {
-    @Mock
-    private lateinit var getMostViewedNews: GetMostViewedNews
+    @Before
+    fun before() {
+        startKoin {
+            modules(listOf(
+                newsDependencies
+            ))
+        }
+    }
 
     @Test
     fun clickNewsListItem_shouldNavigateToDetail()
@@ -34,10 +46,10 @@ class NewsListTest
             ApplicationProvider.getApplicationContext()
         )
         navController.setGraph(R.navigation.news_navigation)
-
-        val newsListScenario = launchFragmentInContainer<NewsList>()
+        val newsListScenario = launchFragmentInContainer <FakeNewsList>(themeResId = R.style.Theme_NewsApp)
         newsListScenario.onFragment {
             Navigation.setViewNavController(it.requireView(), navController)
+            it.populateData(listOf(NewsView.dummyNews()))
         }
 
         onView(ViewMatchers.withId(R.id.newsRv))

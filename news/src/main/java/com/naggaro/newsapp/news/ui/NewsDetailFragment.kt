@@ -16,11 +16,11 @@ import com.naggaro.newsapp.news.BR
 import com.naggaro.newsapp.news.R
 import kotlinx.android.synthetic.main.fragment_news_list.*
 
-class NewsDetail : BaseFragment() {
+class NewsDetailFragment : BaseFragment() {
     //region Members and Props
-    override val layoutResourceId = R.layout.fragment_news_detail
+
     override var shouldBindData=true
-    private val args:NewsDetailArgs by navArgs()
+    private val args:NewsDetailFragmentArgs by navArgs()
     //endregion
 
     //region Fragment LifeCycle
@@ -38,6 +38,7 @@ class NewsDetail : BaseFragment() {
 
 
     //region Implementation
+    override fun layoutResourceId()= R.layout.fragment_news_list
     override fun ignite(savedInstanceState: Bundle?) {
         args.also {
             setScreenTitle(it.news.title,getString(R.string.most_popular))

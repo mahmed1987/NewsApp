@@ -23,9 +23,6 @@ import org.koin.core.scope.Scope
 
 abstract class BaseFragment : Fragment(){
 
-
-
-
     //region Common
     protected var binding: ViewDataBinding? = null
     private var progressBar: ProgressBar? = null
@@ -80,7 +77,7 @@ abstract class BaseFragment : Fragment(){
     //endregion
     //region Abstracts
     protected open var shouldBindData = false
-    protected abstract val layoutResourceId: Int
+    protected abstract fun layoutResourceId(): Int
     protected open fun attachListeners() {
 
     }
@@ -101,14 +98,14 @@ abstract class BaseFragment : Fragment(){
     ): View {
         return if (shouldBindData) {
             binding = DataBindingUtil.inflate(
-                inflater, layoutResourceId, container, false
+                inflater, layoutResourceId(), container, false
             )
             Log.d("Binding", "OnCreateView");
             binding!!.lifecycleOwner = viewLifecycleOwner
             binding!!.root
 
         } else
-            inflater.inflate(layoutResourceId, container, false)
+            inflater.inflate(layoutResourceId(), container, false)
 
 
     }
@@ -120,11 +117,13 @@ abstract class BaseFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBar =
-            ((activity as AppCompatActivity).findViewById(R.id.toolbar) as MaterialToolbar).findViewById(
-                R.id.progressBar
-            )
-        showProgress(false, false)
+        if (activity is AppCompatActivity) {
+            progressBar =
+                ((activity as AppCompatActivity).findViewById(R.id.toolbar) as MaterialToolbar).findViewById(
+                    R.id.progressBar
+                )
+            showProgress(false, false)
+        }
         attachListeners()
         ignite(savedInstanceState)
     }
