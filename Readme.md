@@ -57,16 +57,18 @@ None
 This module exists at the lowest level of the application module graph. By that I mean , this module has no dependencies and only the **Repository** module is the only module which is aware of this module
 ###### Purpose
 1. Provide the network related functionality to the application (Retrofit lives in this module)
-
+###### Dependencies
+*implementation project(":common")
+*implementation project(":dtos")
 ## News (UI module)
 This would be the module which would host the news feature of the application. This feature includes two fragments and takes its data from the business module.
 ###### Purpose
 1. Provide a list of news.
 2. Provides detail of a single news.
 ###### Dependencies
+*implementation project(":business")
 *implementation project(":common")
 *implementation project(":dtos")
-
 ## Test cases
 The following test cases were performed
 1. NewsRepositoryTest - Repository Test
