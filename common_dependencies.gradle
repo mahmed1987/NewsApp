@@ -16,7 +16,7 @@
 android {
     buildTypes {
         release {
-            buildConfigField "String", "API_ENDPOINT", '"https://api.nytimes.com/svc"'
+            buildConfigField "String", "API_ENDPOINT", '"https://api.nytimes.com/svc/"'
             resValue "string", "application_name", "News App"
         }
 
@@ -30,7 +30,10 @@ android {
     }
     signingConfigs {
         release {
-
+            storeFile file('D:\\Projects\\seedsystemskeystore_main.jks')
+            keyAlias 'roundrobinkey'
+            keyPassword 'Sup3r!on58'
+            storePassword 'Sup3r!on58'
         }
     }
 

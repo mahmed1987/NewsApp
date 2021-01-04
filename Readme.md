@@ -10,7 +10,8 @@ This module would not have any dependencies. However THIS WILL BE a dependency f
 1. Base classes of various android components ( Fragments, Activites)
 2. Extension methods that would be used in the application
 3. Styles 
-
+###### Dependencies
+None
 
 ## App 
 
@@ -19,23 +20,38 @@ Other than creating the dependency graph , this module has no other purpose than
 ###### Purposes
 1. Create the DI container
 2. Launch the landing page of the application
+###### Dependencies
+implementation project(":common")
+implementation project(":repositories")
+implementation project(":network")
+implementation project(":news")
+implementation project(":business")
 
 ## Business
 This module will hold all the non UI code of our application. In clean architecture way of speaking , this would hold the usecases for our application.
 This module will not be aware of the UI which would use the business it exposes. This module will have dependencies over the repository module of our application
 ###### Purposes
 1. Provide usecases for our application (used by the UI )
+###### Dependencies
+implementation project(":repositories")
+implementation project(":common")
+implementation project(":dtos")
 
 ## Repository
-
 This module will hold the repositories for all the data entities we are to work with in our application. 
 ###### Purpose
 1. Provide data to the business module
+###### Dependencies
+implementation project(":dtos")
+    implementation project(":network")
+    implementation project(":common")
 
 ## Dtos
 This module is the glue which binds the UI with the data it needs to display. The UI is never aware of anything other than the business module. However the challenge then would be to send a piece of data upstream from repositories to business to UI. Dtos is a module on which the UI , business and repositories are together dependent , without being aware of each other directly. This gives us isolation of the UI with the rest of the system
 ###### Purpose
 1. Provide the DTOs to the UI (which would be translated version of the actual data coming from Room/Web)
+###### Dependencies
+None
 
 ## Network
 This module exists at the lowest level of the application module graph. By that I mean , this module has no dependencies and only the **Repository** module is the only module which is aware of this module
@@ -47,6 +63,9 @@ This would be the module which would host the news feature of the application. T
 ###### Purpose
 1. Provide a list of news.
 2. Provides detail of a single news.
+###### Dependencies
+ implementation project(":common")
+    implementation project(":dtos")
 
 ## Test cases
 The following test cases were performed
