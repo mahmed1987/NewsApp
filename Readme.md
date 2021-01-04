@@ -50,8 +50,9 @@ This would be the module which would host the news feature of the application. T
 
 ## Test cases
 The following test cases were performed
-1. NewsRepositoryTest
-2. GetMostViewedNewsTest
+1. NewsRepositoryTest - Repository Test
+2. GetMostViewedNewsTest - Usecase Test
+3. FakeNewsList - Fragment Navigation Test
 
 
 
