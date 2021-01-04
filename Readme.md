@@ -19,11 +19,11 @@ Other than creating the dependency graph , this module has no other purpose than
 1. Create the DI container
 2. Launch the landing page of the application
 ###### Dependencies
-*implementation project(":common")
-*implementation project(":repositories")
-*implementation project(":network")
-*implementation project(":news")
-*implementation project(":business")
+-implementation project(":common")
+-implementation project(":repositories")
+-implementation project(":network")
+-implementation project(":news")
+-implementation project(":business")
 
 ## Business
 This module will hold all the non UI code of our application. In clean architecture way of speaking , this would hold the usecases for our application.
