@@ -27,20 +27,15 @@ import kotlinx.android.synthetic.main.fragment_news_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NewsListFragment() : BaseFragment() {
-
     //region Members and Props
-
     private val adapter = GeneralAdapter(BR.news, R.layout.news_item, NewsView.DIFF_CALLBACK)
     //endregion
-
     //region Injections
     private val newsViewModel: NewsViewModel by sharedViewModel(from = {
         findNavController().getViewModelStoreOwner(R.id.newsNavigation)
     }) // passing the viewmodelstore here binds the lifecycle of this viewmodel with the navigation graph passed to it. As soon as the navigation graph is destroyed the viewmodel is also killed.
     //endregion
-    //region Fragment Lifecycle
-
-
+    //region Fragment Overides
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         newsViewModel.fetchMostViewedNews("all-sections", 7)
@@ -66,7 +61,8 @@ class NewsListFragment() : BaseFragment() {
 
         return super.onOptionsItemSelected(item)
     }
-
+    //endregion
+    //region Base Overrides
     override fun layoutResourceId()= R.layout.fragment_news_list
     override fun attachListeners() {
         super.attachListeners()
@@ -94,7 +90,7 @@ class NewsListFragment() : BaseFragment() {
                     val largestPicture = PictureUtil.findLargestImage(it.pictures)
                     it.largestPicture = largestPicture
                 }
-                populateList(it)
+                adapter.submitList(it)
             }
             observe(operationStatus)
             {
@@ -108,11 +104,7 @@ class NewsListFragment() : BaseFragment() {
             fault(failure, ::handleFailure)
         }
     }
-
-     fun populateList(it: List<NewsView>) {
-        adapter.submitList(it)
-    }
-
+//endregion
 }
 
 
