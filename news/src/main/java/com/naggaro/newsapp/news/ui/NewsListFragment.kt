@@ -18,6 +18,7 @@ import com.naggaro.common.newsapp.base.GeneralAdapter
 import com.naggaro.common.newsapp.extensions.configureVerticalList
 import com.naggaro.common.newsapp.extensions.fault
 import com.naggaro.common.newsapp.extensions.observe
+import com.naggaro.common.newsapp.extensions.sharedGraphViewModel
 import com.naggaro.dtos.news.NewsView
 import com.naggaro.dtos.news.PictureView
 import com.naggaro.newsapp.news.BR
@@ -31,18 +32,20 @@ class NewsListFragment() : BaseFragment() {
     private val adapter = GeneralAdapter(BR.news, R.layout.news_item, NewsView.DIFF_CALLBACK)
     //endregion
     //region Injections
-    private val newsViewModel: NewsViewModel by sharedViewModel(from = {
-        findNavController().getViewModelStoreOwner(R.id.newsNavigation)
-    }) // passing the viewmodelstore here binds the lifecycle of this viewmodel with the navigation graph passed to it. As soon as the navigation graph is destroyed the viewmodel is also killed.
+    private val newsViewModel by sharedGraphViewModel<NewsViewModel>(R.id.newsNavigation)
+//    private val newsViewModel: NewsViewModel by sharedViewModel(from = {
+//        findNavController().getViewModelStoreOwner(R.id.newsNavigation)
+//    })
     //endregion
     //region Fragment Overides
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        newsViewModel.fetchMostViewedNews("all-sections", 7)
+    newsViewModel.fetchMostViewedNews("all-sections", 7)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // Postpone enter transitions to allow shared element transitions to run.
         // https://github.com/googlesamples/android-architecture-components/issues/495
         postponeEnterTransition()

@@ -26,5 +26,9 @@ class NewsViewModel(application: Application, private val getMostViewedNews: Get
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+    }
+
 
 }

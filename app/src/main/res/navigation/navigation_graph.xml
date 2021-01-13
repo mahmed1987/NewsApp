@@ -3,6 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/newsNavigation">
+    app:startDestination="@id/guestFragment">
     <include app:graph="@navigation/news_navigation" />
+    <fragment
+        android:id="@+id/guestFragment"
+        tools:layout="@layout/guest_fragment"
+        android:name="com.naggaro.newsapp.GuestFragment"
+        android:label="GuestFragment" >
+        <action
+            android:id="@+id/toNews"
+            app:destination="@id/newsNavigation" />
+    </fragment>
+
 </navigation>

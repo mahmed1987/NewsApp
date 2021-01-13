@@ -43,7 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.mockito:mockito-core:2.25.0'
     testImplementation "com.google.truth:truth:1.1"
-    testImplementation "org.koin:koin-test:2.0.1"
+    testImplementation "org.koin:koin-test:2.2.2"
     testImplementation "android.arch.core:core-testing:1.1.1"
     testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
     testImplementation "org.amshove.kluent:kluent:1.14"
@@ -83,9 +83,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     //koin
-    implementation "org.koin:koin-android:2.0.1"
-    implementation "org.koin:koin-androidx-scope:2.0.1"
-    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+    implementation "org.koin:koin-android:2.2.2"
+    implementation "org.koin:koin-androidx-scope:2.2.2"
+    implementation "org.koin:koin-androidx-viewmodel:2.2.2"
 
     //material UI
     implementation 'com.google.android.material:material:1.2.1'
