@@ -1,3 +1,4 @@
+include ':tests'
 include ':business'
 include ':news'
 include ':repositories'

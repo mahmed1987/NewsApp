@@ -21,6 +21,7 @@ import com.naggaro.common.newsapp.extensions.observe
 import com.naggaro.common.newsapp.extensions.sharedGraphViewModel
 import com.naggaro.dtos.news.NewsView
 import com.naggaro.dtos.news.PictureView
+import com.naggaro.newsapp.business.news.usecases.GetMostViewedNews
 import com.naggaro.newsapp.news.BR
 import com.naggaro.newsapp.news.R
 import com.naggaro.newsapp.news.viewmodel.NewsViewModel
@@ -40,7 +41,8 @@ class NewsListFragment() : BaseFragment() {
     //region Fragment Overides
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    newsViewModel.fetchMostViewedNews("all-sections", 7)
+
+    newsViewModel.fetchMostViewedNews(GetMostViewedNews.Params("all-sections", 7))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,7 +60,7 @@ class NewsListFragment() : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.refresh -> {
-                newsViewModel.fetchMostViewedNews("all-sections", 7)
+                newsViewModel.fetchMostViewedNews(GetMostViewedNews.Params("all-sections", 7))
             }
         }
 

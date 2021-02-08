@@ -1,4 +1,4 @@
-package com.naggaro.newsapp.business
+package com.nagarro.newsapp
 
 import org.junit.Test
 

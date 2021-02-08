@@ -7,8 +7,7 @@ import com.naggaro.newsapp.repositories.news.NewsRepository
 import kotlinx.coroutines.CoroutineScope
 
 
-class GetMostViewedNews(var ioScope: CoroutineScope,private val newsRepository: NewsRepository) :
-    BaseUseCase<List<NewsView>, GetMostViewedNews.Params>(ioScope) {
-    override suspend fun run(param: Params) = newsRepository.news(param.sections, param.period)
+class GetMostViewedNews2(private val newsRepository: NewsRepository) {
+    operator fun invoke(param: Params) =newsRepository.news(param.sections, param.period)
     data class Params(val sections: String, val period: Int)
 }

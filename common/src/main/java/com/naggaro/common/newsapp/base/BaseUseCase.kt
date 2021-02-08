@@ -3,6 +3,7 @@ package com.naggaro.common.newsapp.base
 import com.naggaro.common.error.Failure
 import com.naggaro.common.newsapp.functional.Either
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 abstract class BaseUseCase<out Type, in Params>(private val ioScope: CoroutineScope) where Type : Any? {
     abstract suspend fun run(param: Params): Either<Failure, Type>
@@ -15,7 +16,5 @@ abstract class BaseUseCase<out Type, in Params>(private val ioScope: CoroutineSc
             }
         }
     }
-    suspend fun invokeTest(params: Params)=run(params)
-
     class None
 }

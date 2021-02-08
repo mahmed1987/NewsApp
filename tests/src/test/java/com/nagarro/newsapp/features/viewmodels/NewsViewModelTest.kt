@@ -1,49 +1,59 @@
-package com.naggaro.newsapp.news.viewmodel
+package com.nagarro.newsapp.features.viewmodels
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.google.common.truth.Truth
 import com.naggaro.common.newsapp.functional.Either
 import com.naggaro.dtos.news.NewsView
 import com.naggaro.newsapp.business.news.usecases.GetMostViewedNews
-import com.nhaarman.mockito_kotlin.given
-import kotlinx.coroutines.runBlocking
+import com.naggaro.newsapp.news.Subject
+import com.naggaro.newsapp.news.viewmodel.NewsViewModel
+import com.naggaro.newsapp.repositories.news.NewsRepository
+import com.nhaarman.mockito_kotlin.whenever
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
 import org.junit.Before
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.*
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import com.google.common.truth.Truth.assertThat
-import com.naggaro.newsapp.news.Subject
-import com.naggaro.newsapp.news.TestContextProvider
-import com.nhaarman.mockito_kotlin.whenever
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.mockito.Mockito
+
 
 @RunWith(MockitoJUnitRunner::class)
 class NewsViewModelTest {
 
     private lateinit var newsViewModel: NewsViewModel
-
     @get:Rule
     val instantTestExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var mockContext: Application
-    @Mock
     private lateinit var getMostViewedNews: GetMostViewedNews
-    @Mock
     private lateinit var params: GetMostViewedNews.Params
+    @Mock
+    private lateinit var newsRepository: NewsRepository
 
-    private val testScope = TestCoroutineScope()
     private lateinit var subject: Subject
+    val testDispatcher = TestCoroutineDispatcher()
+    val testScope = TestCoroutineScope()
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(testDispatcher)
+        params = GetMostViewedNews.Params("all-sections", 7)
+        getMostViewedNews = GetMostViewedNews(testScope,newsRepository)
         newsViewModel = NewsViewModel(mockContext, getMostViewedNews)
         subject = Subject(testScope)
+    }
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testDispatcher.cleanupTestCoroutines()
     }
 
 
@@ -55,14 +65,11 @@ class NewsViewModelTest {
 
 
     @Test
-    fun `loading news details should update live data`()= runBlockingTest {
-        val testContextProvider = TestContextProvider()
-        getMostViewedNews.ioScope=testScope
-        val news = listOf(NewsView.dummyNews())
+    fun `loading news details should update live data`()= testDispatcher.runBlockingTest {
+        val news = listOf(NewsView.dummyNews(),NewsView.dummyNews())
         whenever(getMostViewedNews.run(params)).thenReturn(Either.Right(news))
-        newsViewModel.fetchMostViewedNews("all-sections", 7)
-        testContextProvider.testCoroutineDispatcher.advanceUntilIdle()
-
+        newsViewModel.fetchMostViewedNews(params)
+        assertThat(newsViewModel.mostViewedNews.value).hasSize(2)
     }
 
 
