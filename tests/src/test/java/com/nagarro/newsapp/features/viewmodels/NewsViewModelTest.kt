@@ -2,7 +2,6 @@ package com.nagarro.newsapp.features.viewmodels
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.google.common.truth.Truth
 import com.naggaro.common.newsapp.functional.Either
 import com.naggaro.dtos.news.NewsView
 import com.naggaro.newsapp.business.news.usecases.GetMostViewedNews
