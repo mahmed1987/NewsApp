@@ -8,6 +8,7 @@ import com.naggaro.common.newsapp.base.BaseFragment
 import com.naggaro.common.newsapp.extensions.themeColor
 import com.naggaro.newsapp.news.BR
 import com.naggaro.newsapp.news.R
+import kotlinx.android.synthetic.main.fragment_news_detail.*
 
 class NewsDetailFragment : BaseFragment() {
     //region Members and Props
@@ -18,7 +19,7 @@ class NewsDetailFragment : BaseFragment() {
     //region Fragment Overrides
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        textView5.visibility=1
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             duration = 400.toLong()
