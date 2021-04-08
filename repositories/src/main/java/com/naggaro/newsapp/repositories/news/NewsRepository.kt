@@ -1,6 +1,5 @@
 package com.naggaro.newsapp.repositories.news
 
-import com.naggaro.common.newsapp.TestOpen
 import com.naggaro.newsapp.network.requestBlocking
 
 class NewsRepository(private val newsWebService: NewsWebService):NewsDataSource {

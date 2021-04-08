@@ -19,7 +19,6 @@ class NewsDetailFragment : BaseFragment() {
     //region Fragment Overrides
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        textView5.visibility=1
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             drawingViewId = R.id.nav_host_fragment
             duration = 400.toLong()

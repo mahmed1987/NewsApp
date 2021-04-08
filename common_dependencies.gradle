@@ -28,14 +28,7 @@ android {
     dataBinding {
         enabled true
     }
-    signingConfigs {
-        release {
-            storeFile file('D:\\Projects\\seedsystemskeystore_main.jks')
-            keyAlias 'roundrobinkey'
-            keyPassword 'Sup3r!on58'
-            storePassword 'Sup3r!on58'
-        }
-    }
+
 
 }
 dependencies {
